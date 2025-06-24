@@ -65,4 +65,4 @@ You should now see the MCP tools working in VS Code chat.
 
 https://www.youtube.com/watch?v=U1YMyUdjqCw
 
-[funny_mcp](https://raw.githubusercontent.com/HoangGeek/store/refs/heads/main/github_copilot/mcp/custom_mcp.png)
+![funny_mcp](https://raw.githubusercontent.com/HoangGeek/store/refs/heads/main/github_copilot/mcp/custom_mcp.png)
