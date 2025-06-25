@@ -68,32 +68,28 @@ https://www.youtube.com/watch?v=U1YMyUdjqCw
 
 ![funny_mcp](https://raw.githubusercontent.com/HoangGeek/store/refs/heads/main/github_copilot/mcp/custom_mcp.png)
 
-+-----------------------------+ +-----------------------------+ +-----------------------------+
-| VS Code | | MCP Server | | VS Code |
-| +-----------------------+ | | +-----------------------+ | | +-----------------------+ |
-| | MCP Client Extension |<-------->| | Parses Input |<-------->| | MCP Client Extension | |
-| | (Chat Window / | | | +----------+------------+ | | | (Displays output | |
-| | Interactive Panel) | | | | | | | to user) | |
-| | - User types input | | | v | | +-----------------------+ |
-| | - Displays output | | | +-----------------------+ | +-----------------------------+
-| +----------+------------+ | | | Detects Tool/Keyword | |
-+-----------------------------+ | +----------+------------+ |
-| | |
-| v |
-| +-----------------------+ |
-| | Finds Registered Tool | |
-| | (e.g. @mcp.tool) | |
-| +----------+------------+ |
-| | |
-| v |
-| +-----------------------+ |
-| | Calls Tool Function | |
-| | (e.g. who*the_fuck* | |
-| | is_yellshark) | |
-| +----------+------------+ |
-| | |
-| v |
-| +-----------------------+ |
-| | Returns Tool Output | |
-| +-----------------------+ |
-+-----------------------------+
+**MCP Data Flow Overview (ASCII Art):**
+
+```
+User                VS Code (MCP Client, "chat.mcp.enabled": true)           LLM Server (e.g. Copilot/GPT)           MCP Server
+  |                              |                                            |                                        |
+  | 1. "Who the fuck             |                                            |                                        |
+  |    is yellshark?"            |                                            |                                        |
+  |----------------------------->|                                            |                                        |
+  |                              | 2. Send prompt to LLM                      |                                        |
+  |                              |------------------------------------------->|                                        |
+  |                              |                                            | 3. Parse intent,                       |
+  |                              |                                            |    select tool:                        |
+  |                              |                                            |    who_the_fuck_is_yellshark()         |
+  |                              | 4. Return tool call info                   |                                        |
+  |<-----------------------------|<-------------------------------------------|                                        |
+  | 5. Call tool:                |                                            |                                        |
+  |    who_the_fuck_             |                                            |                                        |
+  |    is_yellshark()            |------------------------------------------->|                                        |
+  |                              |                                            | 6. Execute tool                        |
+  |                              |                                            |--------------------------------------->|
+  |                              |                                            |                                        |
+  |                              |                                            | 7. Return tool output                  |
+  |                              |<-------------------------------------------|<---------------------------------------|
+  | 8. Display result in chat UI |                                            |                                        |
+```
